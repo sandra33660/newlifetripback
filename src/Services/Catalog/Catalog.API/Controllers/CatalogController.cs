@@ -37,7 +37,7 @@ namespace Catalog.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpGet("trip")]
-        public async Task<ActionResult<Trip>> GetTrip([FromQuery] int pageNum = 0, [FromQuery] int pageSize = 10)
+        protected async Task<ActionResult<Trip>> GetTrip([FromQuery] int pageNum = 0, [FromQuery] int pageSize = 10)
         {
             try
             {
@@ -49,28 +49,28 @@ namespace Catalog.API.Controllers
             }
         }
 
-        /// <summary>
-        /// Get the specified Catalog trip from its identifier
-        /// </summary>
-        /// <param name="id">Identifier of the catalog trip to be retreived</param>
-        /// <returns>Catalog trip found</returns>
-        /// <response code="200">Catalog Trip with the given ID found</response>
-        /// <response code="404">No catalog trip with the given ID found</response>
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [HttpGet("trip/{id:int}")]
-        public async Task<ActionResult<Trip>> GetTripById(int id)
-        {
-            var res = await _repoTrip.GetTripById(id);
-            if (res == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                return res;
-            }
-        }
+        ///// <summary>
+        ///// Get the specified Catalog trip from its identifier
+        ///// </summary>
+        ///// <param name="id">Identifier of the catalog trip to be retreived</param>
+        ///// <returns>Catalog trip found</returns>
+        ///// <response code="200">Catalog Trip with the given ID found</response>
+        ///// <response code="404">No catalog trip with the given ID found</response>
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[ProducesResponseType(StatusCodes.Status404NotFound)]
+        //[HttpGet("trip/{id:int}")]
+        //public async Task<ActionResult<Trip>> GetTripById(int id)
+        //{
+        //    var res = await _repoTrip.GetTripById(id);
+        //    if (res == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    else
+        //    {
+        //        return res;
+        //    }
+        //}
 
 
     }
