@@ -37,7 +37,7 @@ namespace Catalog.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpGet("trip")]
-        protected async Task<ActionResult<Trip>> GetTrip([FromQuery] int pageNum = 0, [FromQuery] int pageSize = 10)
+        public async Task<ActionResult<Trip>> GetTrip([FromQuery] int pageNum = 0, [FromQuery] int pageSize = 10)
         {
             try
             {
