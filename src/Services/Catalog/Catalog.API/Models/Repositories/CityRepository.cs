@@ -45,6 +45,7 @@ namespace Catalog.API.Models
         }
 
         public async Task<City> GetCityById(int id) => await db.QueryFirstOrDefaultAsync<City>($"{selectQuery} WHERE City.IdCity = @id", new { id = id });
+        public async Task<City> GetCityByNameCountry(string searchCity) => await db.QueryFirstOrDefaultAsync<City>($"{selectQuery} WHERE City.NameCity LIKE @SearchCity", new { SearchCity = searchCity + "%" });
 
 
     }

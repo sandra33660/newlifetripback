@@ -69,5 +69,28 @@ namespace Catalog.API.Controllers
                 return res;
             }
         }
+
+        /// <summary>
+        /// Search city by name
+        /// </summary>
+        /// <param name="search">name city search</param>
+        /// <returns>Catalog city by search found</returns>
+        /// <response code="200">Catalog city with the given search found</response>
+        /// <response code="404">No catalog city with the given search found</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpGet("city/{searchCity}")]
+        public async Task<ActionResult<City>> GetTripByName(string searchCity)
+        {
+            var res = await _repoCity.GetCityByNameCountry(searchCity);
+            if (res == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return res;
+            }
+        }
     }
 }

@@ -46,6 +46,5 @@ namespace Catalog.API.Models
 
         public async Task<Accomodation> GetAccomodationpById(int id) => await db.QueryFirstOrDefaultAsync<Accomodation>($"{selectQuery} WHERE Accomodation.IdAccommodation = @id", new { id = id });
 
-
     }
 }

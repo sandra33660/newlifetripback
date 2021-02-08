@@ -37,7 +37,7 @@ namespace Catalog.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpGet("trip")]
-        public async Task<ActionResult<Trip>> GetTrip([FromQuery] int pageNum = 0, [FromQuery] int pageSize = 10)
+        public async Task<ActionResult<IEnumerable<Trip>>> GetTrip([FromQuery] int pageNum = 0, [FromQuery] int pageSize = 10)
         {
             try
             {
@@ -71,7 +71,28 @@ namespace Catalog.API.Controllers
                 return res;
             }
         }
-
+        /// <summary>
+        /// Search trip by name
+        /// </summary>
+        /// <param name="search">name trip search</param>
+        /// <returns>Catalog trip by search found</returns>
+        /// <response code="200">Catalog Trip with the given search found</response>
+        /// <response code="404">No catalog trip with the given search found</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpGet("trip/{searchTrip}")]
+        public async Task<ActionResult<Trip>> GetTripByName(string searchTrip)
+        {
+            var res = await _repoTrip.GetTripByName(searchTrip);
+            if (res == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return res;
+            }
+        }
 
     }
 

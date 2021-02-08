@@ -8,6 +8,6 @@ namespace Catalog.API.Models
     public interface IAccomodationRepository : IDisposable
     {
         Task<IEnumerable<Accomodation>> GetAccomodation(int pageSize, int pageNum);
-        Task<Accomodation> GetAccomodationpById(int idTrip);
+        Task<Accomodation> GetAccomodationpById(int idAccomodation);
     }
 }

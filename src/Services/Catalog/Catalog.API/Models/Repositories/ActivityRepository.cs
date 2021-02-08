@@ -45,6 +45,5 @@ namespace Catalog.API.Models
 
         public async Task<Activity> GetActivityById(int id) => await db.QueryFirstOrDefaultAsync<Activity>($"{selectQuery} WHERE Activity.IdActivity = @id", new { id = id });
 
-
     }
 }

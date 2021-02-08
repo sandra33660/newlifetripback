@@ -31,7 +31,7 @@ namespace Catalog.API.Models
 
 
 
-        public async Task<Trip> GetTripById(int id) => await db.QueryFirstOrDefaultAsync<Trip>($"{selectQuery} WHERE Trip.IdTrip = @id", new { id = id });
+
 
         public async Task<IEnumerable<Trip>> GetTrip(int pageSize, int pageNum)
         {
@@ -51,7 +51,8 @@ namespace Catalog.API.Models
 
         }
 
-
+        public async Task<Trip> GetTripById(int id) => await db.QueryFirstOrDefaultAsync<Trip>($"{selectQuery} WHERE Trip.IdTrip = @id", new { id = id });
+        public async Task<Trip> GetTripByName(string searchTrip) => await db.QueryFirstOrDefaultAsync<Trip>($"{selectQuery} WHERE Trip.Title LIKE @SearchTrip", new { SearchTrip = searchTrip + "%" });
 
     }
 }

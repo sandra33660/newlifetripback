@@ -8,18 +8,3 @@ services:
       dockerfile: src/Services/Catalog/Catalog.API/Dockerfile
     ports:
       - 55012:80
-    depends_on:
-      - newlifetrip.db
-
-  newlifetrip.db:
-    image: "mcr.microsoft.com/mssql/server"
-    command: /bin/bash /entrypoint.sh
-    environment:
-        SA_PASSWORD: "Gribouille@du/33"
-        ACCEPT_EULA: "Y"
-    ports:
-      - 11433:1433
-    volumes:
-      - ./NewLifeTrip.DB/entrypoint.sh:/entrypoint.sh
-      - ./NewLifeTrip.DB/NewLifeTrip.sh:/NewLifeTrip.sh
-      - ./NewLifeTrip.DB/script.sql:/script.sql

@@ -9,5 +9,6 @@ namespace Catalog.API.Models
     {
         Task<IEnumerable<City>> GetCity(int pageSize, int pageNum);
         Task<City> GetCityById(int idcity);
+        Task<City> GetCityByNameCountry(string searchCity);
     }
 }

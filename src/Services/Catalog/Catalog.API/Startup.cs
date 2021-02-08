@@ -17,6 +17,7 @@ namespace Catalog.API
 
         public IConfiguration Configuration { get; }
 
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -27,7 +28,9 @@ namespace Catalog.API
             services.AddTransient<ICityRepository>(s => new CityRepository(Configuration.GetConnectionString("Catalog")));
             services.AddControllers();
             services.AddCors(options => options.AddDefaultPolicy(
-            builder => builder.WithOrigins("http://localhost:3000")));
+                builder => builder.WithOrigins("http://localhost:3000")));
+
+
             services.AddSwaggerGen(
            c =>
            {
@@ -55,7 +58,9 @@ namespace Catalog.API
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "NewLifeTrip v1");
                 });
 
+
             app.UseRouting();
+
             app.UseCors();
 
             app.UseAuthorization();
