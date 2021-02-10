@@ -14,9 +14,9 @@ namespace Catalog.API.Models
         public string Title { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime FinalDate { get; set; }
-        public string Photo { get; set; }
+        public string Photos { get; set; }
         public int NumberOfParticipants { get; set; }
-
+        public int Price { get; set; }
 
     }
 }
