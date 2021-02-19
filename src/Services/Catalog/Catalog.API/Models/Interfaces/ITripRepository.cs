@@ -9,6 +9,11 @@ namespace Catalog.API.Models
     {
         Task<IEnumerable<Trip>> GetTrip(int pageSize, int pageNum);
         Task<Trip> GetTripById(int idTrip);
-        Task<Trip> GetTripByName(string searchTrip);
+        Task<IEnumerable<Trip>> GetTripByName(string search, int pageSize, int pageNum);
+
+        void RemoveTrip(int id);
+        Task<Trip> AddTrip(Trip trip);
+        Task<Trip> UpdateTrip(Trip trip);
+
     }
 }

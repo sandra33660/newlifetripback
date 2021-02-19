@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Catalog.API.Controllers.Models;
 using Catalog.API.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,12 +18,14 @@ namespace Catalog.API.Controllers
 
         private readonly ILogger<CatalogController> _logger;
         private readonly ITripRepository _repoTrip;
+        private readonly IActivityRepository _repoActivity;
 
         public CatalogController(
-            ITripRepository repoTrip, ILogger<CatalogController> logger)
+            ITripRepository repoTrip, ILogger<CatalogController> logger, IActivityRepository repoActivity)
         {
             _logger = logger;
             _repoTrip = repoTrip;
+            _repoActivity = repoActivity;
 
         }
 
@@ -80,20 +83,107 @@ namespace Catalog.API.Controllers
         /// <response code="404">No catalog trip with the given search found</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [HttpGet("trip/{searchTrip}")]
-        public async Task<ActionResult<Trip>> GetTripByName(string searchTrip)
+        [HttpGet("trip/{​​search:regex(^[[a-zA-Z]])}")]
+        public async Task<ActionResult<IEnumerable<Trip>>> GetTripByName(string search, [FromQuery] int pageNum = 0, [FromQuery] int pageSize = 10)
         {
-            var res = await _repoTrip.GetTripByName(searchTrip);
-            if (res == null)
+            try
             {
-                return NotFound();
+                return Ok(await _repoTrip.GetTripByName(search, pageSize, pageNum));
             }
-            else
+            catch (ArgumentOutOfRangeException e)
             {
-                return res;
+                return BadRequest(e.Message);
             }
         }
+        // POST api/<controller>
+        //[HttpPost]
+        //public ActionResult<Trip> Post([FromBody] Trip newTrip)
+        //{
+        //    if (newTrip == null)
+        //    {
+        //        return BadRequest("No trip provided");
+        //    }
+        //    if (newTrip.IdTrip.HasValue)
+        //    {
+        //        return BadRequest("trip must not have");
+        //    }
+        //    _repoTrip.SaveTrip(newTrip);
+        //    var trip = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}/{newTrip.IdTrip}");
+        //    return Created(trip, newTrip);
+        //}
+        [HttpPost]
+        public async Task<ActionResult<Trip>> Post([FromBody] Trip newTrip)
+        {
 
+
+            try
+            {
+                return Ok(await _repoTrip.AddTrip(newTrip));
+            }
+            catch (ArgumentOutOfRangeException e)
+            {
+                return BadRequest(e.Message);
+            }
+
+            //var trip = await _repoTrip.GetTripById(id);
+
+
+            //if (trip == null)
+            //{
+            //    return NotFound();
+            //}
+            //else
+            //{
+            //    return Ok(await _repoTrip.AddTrip(trip));
+            //}
+        }
+
+        // PUT api/<controller>/5
+        [HttpPut("{id}")]
+        public ActionResult<Trip> Put(int id, [FromBody] Trip trip)
+        {
+
+            if (trip == null)
+            {
+                return BadRequest("No trip provided");
+            }
+            if (!trip.IdTrip.HasValue || id != trip.IdTrip.Value)
+            {
+                return BadRequest("Inconsistent trip id");
+            }
+            try
+            {
+                _repoTrip.UpdateTrip(trip);
+
+                return Ok();
+            }
+            catch (ArgumentException)
+            {
+                return NotFound("Unknow trip");
+            }
+
+
+
+
+        }
+
+        // DELETE api/<controller>/5
+        [HttpDelete("{id}")]
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                _repoTrip.RemoveTrip(id);
+                return Ok();
+
+            }
+            catch (ArgumentException)
+            {
+                return NoContent();
+            }
+
+
+        }
     }
 
 }
