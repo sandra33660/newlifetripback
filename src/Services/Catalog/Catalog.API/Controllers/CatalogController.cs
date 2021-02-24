@@ -7,9 +7,12 @@ using Catalog.API.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Web.Http.Cors;
 
 namespace Catalog.API.Controllers
 {
+    [EnableCors(origins: "https://newlifetripwebapi.azurewebsites.net/", headers: "*", methods: "*")]
+
     [ApiController]
     [Route("api/v1/[controller]")]
     public class CatalogController : ControllerBase

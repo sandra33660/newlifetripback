@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System.Web.Http;
 
 namespace Catalog.API
 {
@@ -14,7 +15,20 @@ namespace Catalog.API
         {
             Configuration = configuration;
         }
+        public static class WebApiConfig
+        {
+            public static void Register(HttpConfiguration config)
+            {
+                // New code
+                config.EnableCors();
 
+                config.Routes.MapHttpRoute(
+                    name: "DefaultApi",
+                    routeTemplate: "api/v1/{controller}/{id}",
+                    defaults: new { id = RouteParameter.Optional }
+                );
+            }
+        }
         public IConfiguration Configuration { get; }
 
 
@@ -27,6 +41,7 @@ namespace Catalog.API
             services.AddTransient<IActivityRepository>(s => new ActivityRepository(Configuration.GetConnectionString("Catalog")));
             services.AddTransient<ICityRepository>(s => new CityRepository(Configuration.GetConnectionString("Catalog")));
             services.AddControllers();
+
             services.AddCors(options => options.AddDefaultPolicy(
                 builder => builder.WithOrigins("*")));
 
