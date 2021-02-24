@@ -95,22 +95,7 @@ namespace Catalog.API.Controllers
                 return BadRequest(e.Message);
             }
         }
-        // POST api/<controller>
-        //[HttpPost]
-        //public ActionResult<Trip> Post([FromBody] Trip newTrip)
-        //{
-        //    if (newTrip == null)
-        //    {
-        //        return BadRequest("No trip provided");
-        //    }
-        //    if (newTrip.IdTrip.HasValue)
-        //    {
-        //        return BadRequest("trip must not have");
-        //    }
-        //    _repoTrip.SaveTrip(newTrip);
-        //    var trip = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}/{newTrip.IdTrip}");
-        //    return Created(trip, newTrip);
-        //}
+
         [HttpPost]
         public async Task<ActionResult<Trip>> Post([FromBody] Trip newTrip)
         {
@@ -118,29 +103,19 @@ namespace Catalog.API.Controllers
 
             try
             {
-                return Ok(await _repoTrip.AddTrip(newTrip));
+                return Ok(await _repoTrip.PostNewTripAsync(newTrip));
             }
             catch (ArgumentOutOfRangeException e)
             {
                 return BadRequest(e.Message);
             }
 
-            //var trip = await _repoTrip.GetTripById(id);
 
-
-            //if (trip == null)
-            //{
-            //    return NotFound();
-            //}
-            //else
-            //{
-            //    return Ok(await _repoTrip.AddTrip(trip));
-            //}
         }
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
-        public ActionResult<Trip> Put(int id, [FromBody] Trip trip)
+        public async Task<ActionResult<Trip>> Put(int id, [FromBody] Trip trip)
         {
 
             if (trip == null)
@@ -153,7 +128,7 @@ namespace Catalog.API.Controllers
             }
             try
             {
-                _repoTrip.UpdateTrip(trip);
+                await _repoTrip.UpdateTripAsync(trip);
 
                 return Ok();
             }

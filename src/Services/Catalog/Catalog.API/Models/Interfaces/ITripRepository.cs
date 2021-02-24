@@ -12,8 +12,8 @@ namespace Catalog.API.Models
         Task<IEnumerable<Trip>> GetTripByName(string search, int pageSize, int pageNum);
 
         void RemoveTrip(int id);
-        Task<Trip> AddTrip(Trip trip);
-        Task<Trip> UpdateTrip(Trip trip);
+        Task<int?> PostNewTripAsync(Trip newTrip);
+        Task<Trip> UpdateTripAsync(Trip trip);
 
     }
 }
