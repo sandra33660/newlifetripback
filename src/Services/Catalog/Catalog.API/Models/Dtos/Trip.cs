@@ -14,7 +14,7 @@ namespace Catalog.API.Models
         public string Title { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime FinalDate { get; set; }
-        public string Photos { get; set; }
+        public string? Photos { get; set; }
         public int NumberOfParticipants { get; set; }
         public int Price { get; set; }
         public Trip()
@@ -23,7 +23,7 @@ namespace Catalog.API.Models
         }
         public Trip(int? idComment, int? idActivityTrip, string details, string title, DateTime startDate, DateTime finalDate, int numberOfParticipants, int price)
         {
-            if (title.Length < 2 || title.Length > 50)
+            if (title.Length < 2 || title.Length > 100)
             {
                 throw new ArgumentException("Le titre doit faire au moins 2 caractères");
             }

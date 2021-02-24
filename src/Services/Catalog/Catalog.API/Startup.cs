@@ -28,7 +28,7 @@ namespace Catalog.API
             services.AddTransient<ICityRepository>(s => new CityRepository(Configuration.GetConnectionString("Catalog")));
             services.AddControllers();
             services.AddCors(options => options.AddDefaultPolicy(
-                builder => builder.WithOrigins("http://localhost:3000")));
+                builder => builder.WithOrigins("*")));
 
 
             services.AddSwaggerGen(
