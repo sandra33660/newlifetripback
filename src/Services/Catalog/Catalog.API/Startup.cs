@@ -15,20 +15,7 @@ namespace Catalog.API
         {
             Configuration = configuration;
         }
-        public static class WebApiConfig
-        {
-            public static void Register(HttpConfiguration config)
-            {
-                // New code
-                config.EnableCors();
 
-                config.Routes.MapHttpRoute(
-                    name: "DefaultApi",
-                    routeTemplate: "api/v1/{controller}/{id}",
-                    defaults: new { id = RouteParameter.Optional }
-                );
-            }
-        }
         public IConfiguration Configuration { get; }
 
 
