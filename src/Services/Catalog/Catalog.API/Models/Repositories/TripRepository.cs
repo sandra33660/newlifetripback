@@ -91,18 +91,27 @@ namespace Catalog.API.Models
             var results = await _db
 
                 .QueryAsync<int>(
-                @" USE [new_life_trip]
-                   GO
+                @" USE Newlifetrip33
+                  
                    INSERT INTO Trip
-                        SET Trip.IdComment=@IdComment, 
-                            Trip.IdActivityTrip=@IdActivityTrip,
-                            Trip.Details=@Details, 
-                            Trip.Title=@Title, 
-                            Trip.StartDate=@StartDate,  
-                            Trip.FinalDate=@FinalDate,      
-                            Trip.Price=@Price, 
-                            Trip.NumberOfParticipants=@NumberOfParticipants 
-                  GO",
+                           (Trip.IdComment, 
+                            Trip.IdActivityTrip,
+                            Trip.Details, 
+                            Trip.Title, 
+                            Trip.StartDate,  
+                            Trip.FinalDate,      
+                            Trip.Price, 
+                            Trip.NumberOfParticipants)
+                    VALUES(@IdComment, 
+                            @IdActivityTrip,
+                            @Details, 
+                            @Title, 
+                            @StartDate,  
+                            @FinalDate,      
+                            @Price, 
+                            @NumberOfParticipants );
+                   SELECT SCOPE_IDENTITY();",
+
                     new
                     {
 
@@ -142,6 +151,7 @@ namespace Catalog.API.Models
             var catalogTrip = new Trip() { IdTrip = trip.IdTrip };
 
             int id = await _db.ExecuteScalarAsync<int>(@"
+                    USE Newlifetrip33
                     UPDATE Trip
                         (Trip.IdTrip, Trip.IdComment, Trip.IdActivityTrip,Trip.Details, Trip.Title, Trip.StartDate,  Trip.FinalDate,      
                                             Trip.Price, Trip.NumberOfParticipants)
