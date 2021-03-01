@@ -9,7 +9,7 @@ using System.Web.Http.Cors;
 
 namespace Catalog.API.Controllers
 {
-    [EnableCors(origins: "https://newlifetripwebapi.azurewebsites.net/", headers: "*", methods: "*")]
+    [EnableCors(origins: "https://jolly-moss-044ca4500.azurestaticapps.net", headers: "*", methods: "*")]
 
     [ApiController]
     [Route("api/v1/[controller]")]
